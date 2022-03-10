@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-	  <a-button type="primary">按钮</a-button>
-	  <a-input>123</a-input>
+	  <a-button type="primary">按钮1</a-button>
+	  
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
@@ -15,6 +15,9 @@ export default {
   name: 'HomeView',
   components: {
     HelloWorld
+  },
+  mounted() {
+  	console.log(process.env, "全局文件2");
   }
 }
 </script>
