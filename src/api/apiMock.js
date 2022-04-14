@@ -3,8 +3,7 @@
  */
 
 
-
-// 登录
+// 获取菜单
 export function getMenuMock() {
 	return new Promise(function(resolve, reject) {
 		let data = {

@@ -14,12 +14,10 @@
 <script setup>
 import HelloWorld from '@/components/HelloWorld.vue';
 
-import { ref, onMounted, } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import { useStore } from 'vuex';
 const store = useStore();
-
-
 
 // 像在平常的setup中一样的写,但是不需要返回任何变量
 const num = ref(0); //在此处定义的 num 可以直接使用
@@ -28,8 +26,8 @@ const addNum = () => {
 	num.value++;
 	// arr.value.push(1)
 	obj.value.test = 2;
-	
-	store.commit("layouts/setMenu", ['测试']);
+
+	store.commit('layouts/setMenu', ['测试']);
 };
 
 const arr = ref([]);
@@ -40,6 +38,4 @@ const addArr = () => {
 const obj = ref({
 	test: 1
 });
-
-
 </script>
