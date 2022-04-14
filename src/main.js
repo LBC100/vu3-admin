@@ -7,6 +7,9 @@ const app =  createApp(App)
 // 引入css
 // import 'ant-design-vue/dist/antd.css';
 import { antArr } from "@/components/AntDesignVue.js";
+for (const item of antArr) {
+  app.use(item);
+}
 // import { DatePicker, Input, Button } from "ant-design-vue";
 
 // import Antd from 'ant-design-vue'
@@ -15,9 +18,7 @@ import { antArr } from "@/components/AntDesignVue.js";
 
 
 
-for (const item of antArr) {
-  app.use(item);
-}
+
 
 
 app.use(store).use(router).mount('#app')

@@ -1,25 +1,43 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import {
+	createRouter,
+	createWebHistory
+} from 'vue-router'
+
+import basicLayout from '@/layouts/basic-layout/index.vue'
+import baseOne from './modules/baseOne.js'
+import base from './modules/base.js'
+import set from './modules/set.js'
+
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+	// ...baseOne,
+	// {
+	// 	path: '/',
+	// 	name: 'home',
+	// 	meta: {
+	// 		title: '首页'
+	// 	},
+	// 	component: () => import('@/views/home/HomeView.vue')
+	// },
+	base,
+	set,
+	{
+		path: '/404',
+		name: '404',
+		meta: {
+			keepAlive: true
+		},
+		component: () => import('@/views/404.vue')
+	},
+	{
+		path: '/:pathMatch(.*)',
+		redirect: '/404'
+	}
 ]
 console.log(process.env, "全局文件1");
 const router = createRouter({
-  history: createWebHistory(process.env.VUE_APP_BASE_URL),
-  routes
+	history: createWebHistory(process.env.VUE_APP_BASE_URL),
+	routes
 })
 
 export default router

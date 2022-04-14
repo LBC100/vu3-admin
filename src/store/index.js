@@ -1,14 +1,22 @@
-import { createStore } from 'vuex'
+import {
+	createStore
+} from 'vuex'
+
+
+
+const files = require.context('./modules', false, /\.js$/);
+const modules = {};
+
+files.keys().forEach(key => {
+	modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
+});
+
+
 
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+	state: {},
+	mutations: {},
+	actions: {},
+	namespaced: true,
+	modules
 })
