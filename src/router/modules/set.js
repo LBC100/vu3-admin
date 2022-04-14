@@ -8,7 +8,7 @@ export default {
 	children: [
 		{
 			path: '/set/about',
-			name: 'about',
+			name: 'set_about',
 			meta: {
 				title: '关于'
 			},

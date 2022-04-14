@@ -4,21 +4,11 @@ import {
 } from 'vue-router'
 
 import basicLayout from '@/layouts/basic-layout/index.vue'
-import baseOne from './modules/baseOne.js'
 import base from './modules/base.js'
 import set from './modules/set.js'
 
 
 const routes = [
-	// ...baseOne,
-	// {
-	// 	path: '/',
-	// 	name: 'home',
-	// 	meta: {
-	// 		title: '首页'
-	// 	},
-	// 	component: () => import('@/views/home/HomeView.vue')
-	// },
 	base,
 	set,
 	{
