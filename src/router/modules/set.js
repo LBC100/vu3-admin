@@ -1,27 +1,18 @@
 import basicLayout from '@/layouts/basic-layout/index.vue'
-import blank from '@/layouts/basic-layout/blank/index.vue'
 
 export default {
 	path: '/set',
 	name: 'set',
 	redirect: '/set/about',
 	component: basicLayout,
-	children: [{
-		path: '',
-		name: 'test',
-		meta: {
-			title: '关于'
-		},
-		redirect: '/set/about',
-		component: blank,
-		children: [{
+	children: [
+		{
 			path: '/set/about',
-			name: 'set',
+			name: 'about',
 			meta: {
-				title: '设置'
+				title: '关于'
 			},
 			component: () => import('@/views/about/AboutView.vue')
-		}, ]
-
-	}, ]
+		},
+	]
 }
