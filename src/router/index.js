@@ -6,10 +6,12 @@ import {
 import basicLayout from '@/layouts/basic-layout/index.vue'
 import base from './modules/base.js'
 import set from './modules/set.js'
+import goods from './modules/goods.js'
 
 
 const routes = [
 	base,
+	goods,
 	set,
 	{
 		path: '/404',

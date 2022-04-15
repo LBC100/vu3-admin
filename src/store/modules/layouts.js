@@ -4,16 +4,16 @@
 export default {
 	namespaced: true,
 	state: {
-		menu: [], // 菜单
+		menuList: [], // 菜单
 	},
 	getters: {
 		// getMenu(state) {
-		// 	return state.menu
+		// 	return state.menuList
 		// },
 	},
 	mutations: {
 		setMenu(state, list = []) {
-			state.menu = list;
+			state.menuList = list;
 		}
 
 	},

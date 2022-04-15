@@ -2,41 +2,49 @@
 	<a-layout style="height: 100%;">
 		<a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
 			<div class="logo">123</div>
-			<a-menu theme="dark" mode="inline" @click="clickMenu" @openChange="onOpenChange" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
-				<!-- {{layoutData.menu}} v-for="(itemChildren, indexChildren) in item.children" -->
-				<div class="" v-for="(item, index) in layoutData.menu" :key="item.path">
-					<a-menu-item :key="item.path" >
-						<user-outlined />
-						<span>{{ item.meta.title }}</span>
-					</a-menu-item>
-				</div>
 
-				<a-sub-menu key="sub2">
+			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
+				<a-menu-item key="menu1">
+					<user-outlined />
+					<span>{{ '测试1' }}</span>
+				</a-menu-item>
+
+				<a-sub-menu key="sub1">
 					<template #icon>
-						<video-camera-outlined />
+						<MailOutlined />
 					</template>
-
 					<template #title>
-						设置
+						Navigation One
 					</template>
 					<a-menu-item key="1">Option 1</a-menu-item>
 					<a-menu-item key="2">Option 2</a-menu-item>
 					<a-menu-item key="3">Option 3</a-menu-item>
-					<a-menu-item key="5">Option 5</a-menu-item>
+					<a-menu-item key="4">Option 4</a-menu-item>
 				</a-sub-menu>
-
-				<a-sub-menu key="sub3">
-					<template #icon>
-						<video-camera-outlined />
-					</template>
-
+				<a-sub-menu key="sub2">
+					<template #icon></template>
 					<template #title>
-						设置
+						<AppstoreOutlined />
+						Navigation Two
 					</template>
-					<a-menu-item key="7">Option 7</a-menu-item>
-					<a-menu-item key="8">Option 8</a-menu-item>
+					<a-menu-item key="5">Option 5</a-menu-item>
+					<a-menu-item key="6">Option 6</a-menu-item>
+					<a-sub-menu key="sub3" title="Submenu">
+						<a-menu-item key="7">Option 7</a-menu-item>
+						<a-menu-item key="8">Option 8</a-menu-item>
+					</a-sub-menu>
+				</a-sub-menu>
+				<a-sub-menu key="sub4">
+					<template #icon>
+						<SettingOutlined />
+					</template>
+					<template #title>
+						Navigation Three
+					</template>
 					<a-menu-item key="9">Option 9</a-menu-item>
 					<a-menu-item key="10">Option 10</a-menu-item>
+					<a-menu-item key="11">Option 11</a-menu-item>
+					<a-menu-item key="12">Option 12</a-menu-item>
 				</a-sub-menu>
 			</a-menu>
 		</a-layout-sider>
@@ -54,10 +62,21 @@
 </template>
 
 <script setup>
-import { UserOutlined, VideoCameraOutlined, UploadOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
+import {
+	MailOutlined,
+	CalendarOutlined,
+	AppstoreOutlined,
+	SettingOutlined,
+	UserOutlined,
+	VideoCameraOutlined,
+	UploadOutlined,
+	MenuUnfoldOutlined,
+	MenuFoldOutlined
+} from '@ant-design/icons-vue';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
 import { useRouter } from 'vue-router';
+import to from 'await-to-js';
 
 import { useStore } from 'vuex';
 
@@ -78,15 +97,24 @@ let router = useRouter();
 // 	}
 // );
 
+// 菜单递归
+const menuRecursion = (arr = []) => {
+	return arr.map(ei => {
+		return e;
+	});
+};
+
 // 获取菜单
-const getMenuMockFn = () => {
-	getMenuMock()
-		.then(res => {
-			store.commit('layouts/setMenu', res.data);
-			console.log(res, '获取菜单1');
-		})
-		.catch(err => {})
-		.finally(() => {});
+const getMenuMockFn = async () => {
+	// const res = await getMenuMock();
+	const [err, res] = await to(getMenuMock());
+	if (err) {
+		console.log('错误处理1');
+	}
+
+	// let newData = menuRecursion(res.data);
+
+	console.log(res, '获取菜单3');
 };
 
 let layoutData = computed(() => {
@@ -97,13 +125,34 @@ let layoutData = computed(() => {
 // const selectedKeys = ref(['8']);
 // const openKeys = ref(['sub2']);
 const collapsed = ref(false);
+
 const state = reactive({
-	// rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
-	openKeys: ['sub1'],
-	selectedKeys: ['5']
+	rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
+	// openKeys: ['sub1'],
+	// openKeys: ['sub2','sub3'],
+	openKeys: [],
+	selectedKeys: []
 });
 
+const clickMenu = (e, i) => {
+	// state.openKeys = []
+	// router.push(e.key);
+	// console.log(e, '菜单点击1');
+};
+
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
+
+const onOpenChange = openKeys => {
+	const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
+
+	if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+		state.openKeys = openKeys;
+	} else {
+		state.openKeys = latestOpenKey ? [latestOpenKey] : [];
+	}
+
+	console.log(openKeys, state.openKeys, '展开1');
+};
 
 // 监听路由
 watch(
@@ -115,22 +164,6 @@ watch(
 	},
 	{ immediate: true, deep: true }
 );
-const clickMenu = (e, i) => {
-	router.push(e.key);
-	// console.log(e, '菜单点击1');
-};
-
-const onOpenChange = openKeys => {
-	console.log(openKeys, '展开');
-	// const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
-
-	// if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-	// 	state.openKeys = openKeys;
-	// } else {
-	// 	state.openKeys = latestOpenKey ? [latestOpenKey] : [];
-	// }
-};
-
 </script>
 <style lang="less" scoped>
 /deep/ .trigger {
