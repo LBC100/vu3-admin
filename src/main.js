@@ -17,6 +17,8 @@ for (const item of antArr) {
 // app.use(Button)
 
 
+// 引入mockjs
+require('./mock/mock.js')
 
 
 

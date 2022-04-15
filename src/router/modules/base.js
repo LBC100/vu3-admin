@@ -7,7 +7,7 @@ export default {
 	component: basicLayout,
 	children: [{
 			path: '/base/home',
-			name: 'base_home',
+			name: 'baseHome',
 			meta: {
 				title: '首页'
 			},
@@ -15,7 +15,7 @@ export default {
 		},
 		{
 			path: '/base/about',
-			name: 'base_about',
+			name: 'baseAbout',
 			meta: {
 				title: '关于'
 			},
