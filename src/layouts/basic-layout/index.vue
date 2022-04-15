@@ -3,11 +3,11 @@
 		<a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
 			<div class="logo">123</div>
 			<a-menu theme="dark" mode="inline" @click="clickMenu" @openChange="onOpenChange" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
-				<!-- {{layoutData.menu}} -->
+				<!-- {{layoutData.menu}} v-for="(itemChildren, indexChildren) in item.children" -->
 				<div class="" v-for="(item, index) in layoutData.menu" :key="item.path">
-					<a-menu-item :key="itemChildren.path" v-for="(itemChildren, indexChildren) in item.children">
+					<a-menu-item :key="item.path" >
 						<user-outlined />
-						<span>{{ itemChildren.meta.title }}</span>
+						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 				</div>
 
