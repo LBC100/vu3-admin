@@ -100,7 +100,7 @@ let router = useRouter();
 // 菜单递归
 const menuRecursion = (arr = []) => {
 	return arr.map(ei => {
-		return e;
+		return ei;
 	});
 };
 
@@ -109,10 +109,9 @@ const getMenuMockFn = async () => {
 	// const res = await getMenuMock();
 	const [err, res] = await to(getMenuMock());
 	if (err) {
-		console.log('错误处理1');
 	}
 
-	// let newData = menuRecursion(res.data);
+	let newData = menuRecursion(res.data);
 
 	console.log(res, '获取菜单3');
 };
