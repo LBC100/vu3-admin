@@ -5,11 +5,12 @@ export default {
 	name: 'goods',
 	redirect: '/goods/clothing',
 	component: basicLayout,
-	children: [{
-			path: '/goods/clothing',
-			name: 'goodsClothing',
+	children: [
+		{
+			path: '/goods/menJacket',
+			name: 'goodsJacket',
 			meta: {
-				title: '衣服'
+				title: '男夹克'
 			},
 			component: () => import('@/views/home/HomeView.vue')
 		},

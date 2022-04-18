@@ -40,6 +40,24 @@ export async function getMenuMock() {
 						meta: {
 							title: '衣服'
 						},
+						children: [
+							{
+								path: '/goods/jacket',
+								name: 'goodsJacket',
+								meta: {
+									title: '夹克'
+								},
+								children: [
+									{
+										path: '/goods/menJacket',
+										name: 'goodsMenJacket',
+										meta: {
+											title: '男夹克'
+										},
+									},
+								]
+							},
+						]
 					},
 					{
 						path: '/goods/shoe',
@@ -66,6 +84,55 @@ export async function getMenuMock() {
 					}
 				]
 			},
+			{
+				path: '/plant',
+				name: 'plant',
+				meta: {
+					title: '植物/蔬菜'
+				},
+				children: [
+					{
+						path: '/plant/Tree',
+						name: 'plantTree',
+						meta: {
+							title: '树'
+						},
+						children: [
+							{
+								path: '/plant/appleTree',
+								name: 'goodsAppleTree',
+								meta: {
+									title: '苹果树'
+								},
+							},
+						]
+					},
+					{
+						path: '/plant/radish',
+						name: 'plantRadish',
+						meta: {
+							title: '萝卜'
+						},
+						children: [
+							{
+								path: '/plant/whiteRadish',
+								name: 'plantWhiteRadish',
+								meta: {
+									title: '白萝卜'
+								},
+							},
+							{
+								path: '/plant/carrot',
+								name: 'plantCarrot',
+								meta: {
+									title: '红萝卜'
+								},
+							},
+						]
+					}
+				]
+			},
+					
 		]
 	}
 	return promiseFunction(data)

@@ -34,7 +34,7 @@ vuex
 			return store.state.dataList;
 		});
 　　//commit提交
-　　const myCommit = () =>{\
+　　const myCommit = () =>{
 　　　　store.commit("commitValue");
 　　}
 
