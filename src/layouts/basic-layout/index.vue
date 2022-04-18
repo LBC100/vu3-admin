@@ -4,12 +4,16 @@
 			<div class="logo">123</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
-				<a-menu-item key="menu1">
-					<user-outlined />
-					<span>{{ '测试1' }}</span>
-				</a-menu-item>
+				<div class="" v-for="(item, index) in menuList" :key="item.path">
+					<a-menu-item v-if="!item.children" :key="item.path">
+						<user-outlined />
+						<span>{{ item.meta.title }}</span>
+					</a-menu-item>
 
-				<a-sub-menu key="sub1">
+					<subMenuPlus v-else :data="item" />
+				</div>
+
+				<!-- <a-sub-menu key="sub1">
 					<template #icon>
 						<MailOutlined />
 					</template>
@@ -46,6 +50,7 @@
 					<a-menu-item key="11">Option 11</a-menu-item>
 					<a-menu-item key="12">Option 12</a-menu-item>
 				</a-sub-menu>
+			 -->
 			</a-menu>
 		</a-layout-sider>
 		<a-layout>
@@ -76,8 +81,9 @@ import {
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
 import { useRouter } from 'vue-router';
-import to from 'await-to-js';
+import subMenuPlus from './subMenuPlus';
 
+import to from 'await-to-js';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -85,39 +91,26 @@ const store = useStore();
 onMounted(() => {
 	getMenuMockFn();
 
-	console.log(window.location.pathname, '地址栏1');
+	console.log(window.location.pathname, menuList, '地址栏1');
 });
 
 let router = useRouter();
-// 监听当前路由变化
-// watch(
-// 	() => router.currentRoute.value,
-// 	e => {
-// 		console.log(e, '路由变化了1');
-// 	}
-// );
-
-// 菜单递归
-const menuRecursion = (arr = []) => {
-	return arr.map(ei => {
-		return ei;
-	});
-};
 
 // 获取菜单
+// const menuList = ref([]);
 const getMenuMockFn = async () => {
 	// const res = await getMenuMock();
 	const [err, res] = await to(getMenuMock());
 	if (err) {
 	}
 
-	let newData = menuRecursion(res.data);
+	store.commit('layouts/setMenu', res.data);
 
 	console.log(res, '获取菜单3');
 };
 
-let layoutData = computed(() => {
-	return store.state.layouts;
+let menuList = computed(() => {
+	return store.getters['layouts/getMenuList'];
 });
 
 // 左侧菜单
@@ -126,17 +119,33 @@ let layoutData = computed(() => {
 const collapsed = ref(false);
 
 const state = reactive({
-	rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
+	rootSubmenuKeys: ['/goods', '/plant'],
 	// openKeys: ['sub1'],
 	// openKeys: ['sub2','sub3'],
 	openKeys: [],
 	selectedKeys: []
 });
 
-const clickMenu = (e, i) => {
-	// state.openKeys = []
-	// router.push(e.key);
-	// console.log(e, '菜单点击1');
+let oneLayerStr = computed(() => {
+	let str = '';
+	menuList.value.map(e => {
+		if (!e.children) {
+			str = str + `${e.path},`;
+		}
+	});
+	console.log(str, '过滤');
+	return str;
+});
+
+const clickMenu = e => {
+	if (oneLayerStr.value.indexOf(e.key) != -1) {
+		// 没有子菜单
+		state.openKeys = [];
+	}
+
+	router.push(e.key);
+
+	// console.log(e, oneLayerStr,  '菜单点击1');
 };
 
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
@@ -149,6 +158,10 @@ const onOpenChange = openKeys => {
 	} else {
 		state.openKeys = latestOpenKey ? [latestOpenKey] : [];
 	}
+
+	// if (state.openKeys.length == 3) {
+	// 	state.openKeys = [state.openKeys[0], state.openKeys[2]];
+	// }
 
 	console.log(openKeys, state.openKeys, '展开1');
 };
