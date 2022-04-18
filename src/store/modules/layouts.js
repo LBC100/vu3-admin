@@ -51,20 +51,22 @@ export default {
 				
 				for (let i = 0; i < arr.length; i++) {
 					let item = arr[i];
+					
+					if(fatherItem) {
+						item.path =  fatherItem.path + ',' + item.path
+					}else {
+						
+					}
 					if(item.children) {
 						
 						console.log(item, i, "1递归菜单6");
 						
-						if(fatherItem) {
-							item.pathKeyStr =  fatherItem.path + ',' + item.path + ','
-						}else {
-							// item.pathKeyStr =   item.path
-						}
+						
 						menuRecursionFor(item.children, item)
 					}else {
 						if(fatherItem) {
-							item.pathKeyStr = fatherItem.pathKeyStr
-							// item.openKeys = fatherItem.pathKeyStr.split(',')
+							item.pathKeyStr = fatherItem.path
+							item.openKeys = fatherItem.path.split(',')
 						}
 						arrMenu.push(item);
 						console.log(item, i, "1递归菜单7");
@@ -75,11 +77,11 @@ export default {
 			
 			let arr = menuRecursionFor(state.menuList);
 			
-			
+			let arr02 = menuRecursion(state.menuList);
 			
 			// console.log(arr, "递归菜单1");
-			console.log( arrMenu, "递归菜单3");
-			return menuRecursion(state.menuList);
+			console.log( arrMenu,  "递归菜单3");
+			return arr02;
 		},
 	},
 	mutations: {
