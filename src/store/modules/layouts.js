@@ -59,7 +59,7 @@ export default {
 					}
 					if(item.children) {
 						
-						console.log(item, i, "1递归菜单6");
+						// console.log(item, i, "1递归菜单6");
 						
 						
 						menuRecursionFor(item.children, item)
@@ -69,19 +69,20 @@ export default {
 							item.openKeys = fatherItem.path.split(',')
 						}
 						arrMenu.push(item);
-						console.log(item, i, "1递归菜单7");
+						// console.log(item, i, "1递归菜单7");
 					}
-					console.log(item, "递归菜单2");
+					// console.log(item, "递归菜单2");
 				}
 			};
 			
-			let arr = menuRecursionFor(state.menuList);
 			
-			let arr02 = menuRecursion(state.menuList);
+			let arr = menuRecursionFor(JSON.parse(JSON.stringify(state.menuList)) );
+			
+			// let arr02 = menuRecursion(state.menuList);
 			
 			// console.log(arr, "递归菜单1");
 			console.log( arrMenu,  "递归菜单3");
-			return arr02;
+			return {menuList: state.menuList, openKeys: arrMenu};
 		},
 	},
 	mutations: {

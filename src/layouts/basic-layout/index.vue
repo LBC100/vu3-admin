@@ -4,7 +4,7 @@
 			<div class="logo">123</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
-				<div class="" v-for="(item, index) in menuList" :key="item.path">
+				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
 					<a-menu-item v-if="!item.children" :key="item.path">
 						<user-outlined />
 						<span>{{ item.meta.title }}</span>
@@ -91,7 +91,7 @@ const store = useStore();
 onMounted(() => {
 	getMenuMockFn();
 
-	console.log(window.location.pathname, menuList, '地址栏1');
+	console.log(window.location.pathname, menuData, '地址栏1');
 });
 
 let router = useRouter();
@@ -109,9 +109,20 @@ const getMenuMockFn = async () => {
 	console.log(res, '获取菜单3');
 };
 
-let menuList = computed(() => {
+// 菜单数据
+let menuData = computed(() => {
 	return store.getters['layouts/getMenuList'];
 });
+
+watch(menuData,(newValue,oldValue) => {
+	let to = window.location.pathname.replace('/admin', '');
+	let data = newValue.openKeys.filter((e) => e.path.indexOf(to) != -1)[0];
+	if(data) {
+		state.openKeys = data.openKeys;
+	}
+	console.log("menuData变了", data, newValue.openKeys,);
+	
+},{ deep: true })
 
 // 左侧菜单
 // const selectedKeys = ref(['8']);
@@ -128,7 +139,7 @@ const state = reactive({
 
 let oneLayerStr = computed(() => {
 	let str = '';
-	menuList.value.map(e => {
+	menuData.menuList.value.map(e => {
 		if (!e.children) {
 			str = str + `${e.path},`;
 		}
@@ -172,7 +183,9 @@ watch(
 	(to, from) => {
 		//要执行的方法
 		state.selectedKeys = [to];
-		console.log(to, from, state.selectedKeys, 'toPath');
+		// let arr = menuData.value.openKeys.filter((e) => e.path.indexOf(to) != -1);
+		
+		console.log(to, from, state.selectedKeys, menuData.value,   '路由1');
 	},
 	{ immediate: true, deep: true }
 );
