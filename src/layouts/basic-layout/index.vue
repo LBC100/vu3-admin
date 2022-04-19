@@ -139,7 +139,7 @@ const state = reactive({
 
 let oneLayerStr = computed(() => {
 	let str = '';
-	menuData.menuList.value.map(e => {
+	menuData.value.menuList.map(e => {
 		if (!e.children) {
 			str = str + `${e.path},`;
 		}
@@ -149,6 +149,7 @@ let oneLayerStr = computed(() => {
 });
 
 const clickMenu = e => {
+	
 	if (oneLayerStr.value.indexOf(e.key) != -1) {
 		// 没有子菜单
 		state.openKeys = [];
