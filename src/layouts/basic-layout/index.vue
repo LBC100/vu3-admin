@@ -5,12 +5,12 @@
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
 				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
-					<a-menu-item v-if="!item.children" :key="item.path">
+					<a-menu-item v-if="!item.children && item.hideMenu != 1" :key="item.path">
 						<Icon :icon="item.icon" />
 						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 
-					<subMenuPlus v-else :data="item" />
+					<subMenuPlus v-if="item.children && item.hideMenu != 1" :data="item" />
 				</div>
 			</a-menu>
 		</a-layout-sider>
@@ -79,9 +79,10 @@ let menuData = computed(() => {
 watch(
 	menuData,
 	(newValue, oldValue) => {
+		// 根据路由地址展开左侧菜单
 		let to = window.location.pathname.replace('/admin', '');
 		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
-		if (data) {
+		if (data && data.hideMenu != 1) {
 			state.openKeys = data.openKeys;
 		}
 		console.log('menuData变了', data, newValue.openKeys);
@@ -142,7 +143,7 @@ const onOpenChange = openKeys => {
 	console.log(openKeys, state.openKeys, '展开1');
 };
 
-// 监听路由
+// 监听路由 根据地址设置选中的菜单
 watch(
 	() => router.currentRoute.value.path,
 	(to, from) => {
