@@ -6,51 +6,12 @@
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
 				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
 					<a-menu-item v-if="!item.children" :key="item.path">
-						<user-outlined />
+						<Icon :icon="item.icon" />
 						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 
 					<subMenuPlus v-else :data="item" />
 				</div>
-
-				<!-- <a-sub-menu key="sub1">
-					<template #icon>
-						<MailOutlined />
-					</template>
-					<template #title>
-						Navigation One
-					</template>
-					<a-menu-item key="1">Option 1</a-menu-item>
-					<a-menu-item key="2">Option 2</a-menu-item>
-					<a-menu-item key="3">Option 3</a-menu-item>
-					<a-menu-item key="4">Option 4</a-menu-item>
-				</a-sub-menu>
-				<a-sub-menu key="sub2">
-					<template #icon></template>
-					<template #title>
-						<AppstoreOutlined />
-						Navigation Two
-					</template>
-					<a-menu-item key="5">Option 5</a-menu-item>
-					<a-menu-item key="6">Option 6</a-menu-item>
-					<a-sub-menu key="sub3" title="Submenu">
-						<a-menu-item key="7">Option 7</a-menu-item>
-						<a-menu-item key="8">Option 8</a-menu-item>
-					</a-sub-menu>
-				</a-sub-menu>
-				<a-sub-menu key="sub4">
-					<template #icon>
-						<SettingOutlined />
-					</template>
-					<template #title>
-						Navigation Three
-					</template>
-					<a-menu-item key="9">Option 9</a-menu-item>
-					<a-menu-item key="10">Option 10</a-menu-item>
-					<a-menu-item key="11">Option 11</a-menu-item>
-					<a-menu-item key="12">Option 12</a-menu-item>
-				</a-sub-menu>
-			 -->
 			</a-menu>
 		</a-layout-sider>
 		<a-layout>
@@ -78,6 +39,7 @@ import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined
 } from '@ant-design/icons-vue';
+import { Icon } from '@/components/iconPlus';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
 import { useRouter } from 'vue-router';
@@ -114,15 +76,18 @@ let menuData = computed(() => {
 	return store.getters['layouts/getMenuList'];
 });
 
-watch(menuData,(newValue,oldValue) => {
-	let to = window.location.pathname.replace('/admin', '');
-	let data = newValue.openKeys.filter((e) => e.path.indexOf(to) != -1)[0];
-	if(data) {
-		state.openKeys = data.openKeys;
-	}
-	console.log("menuData变了", data, newValue.openKeys,);
-	
-},{ deep: true })
+watch(
+	menuData,
+	(newValue, oldValue) => {
+		let to = window.location.pathname.replace('/admin', '');
+		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
+		if (data) {
+			state.openKeys = data.openKeys;
+		}
+		console.log('menuData变了', data, newValue.openKeys);
+	},
+	{ deep: true }
+);
 
 // 左侧菜单
 // const selectedKeys = ref(['8']);
@@ -149,7 +114,6 @@ let oneLayerStr = computed(() => {
 });
 
 const clickMenu = e => {
-	
 	if (oneLayerStr.value.indexOf(e.key) != -1) {
 		// 没有子菜单
 		state.openKeys = [];
@@ -185,8 +149,8 @@ watch(
 		//要执行的方法
 		state.selectedKeys = [to];
 		// let arr = menuData.value.openKeys.filter((e) => e.path.indexOf(to) != -1);
-		
-		console.log(to, from, state.selectedKeys, menuData.value,   '路由1');
+
+		console.log(to, from, state.selectedKeys, menuData.value, '路由1');
 	},
 	{ immediate: true, deep: true }
 );

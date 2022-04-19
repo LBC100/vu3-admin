@@ -16,6 +16,7 @@ export async function getMenuMock() {
 			{
 				path: '/base/home',
 				name: 'baseHome',
+				icon: 'HomeOutlined',
 				meta: {
 					title: '首页'
 				},
@@ -23,6 +24,7 @@ export async function getMenuMock() {
 			{
 				path: '/base/about',
 				name: 'baseAbout',
+				icon: 'BarsOutlined',
 				meta: {
 					title: '关于'
 				},
@@ -30,6 +32,7 @@ export async function getMenuMock() {
 			{
 				path: '/goods',
 				name: 'goods',
+				icon: 'BarsOutlined',
 				meta: {
 					title: '商品'
 				},
