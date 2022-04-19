@@ -4,53 +4,14 @@
 			<div class="logo">123</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
-				<div class="" v-for="(item, index) in menuList" :key="item.path">
-					<a-menu-item v-if="!item.children" :key="item.path">
-						<user-outlined />
+				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
+					<a-menu-item v-if="!item.children && item.hideMenu != 1" :key="item.path">
+						<Icon :icon="item.icon" />
 						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 
-					<subMenuPlus v-else :data="item" />
+					<subMenuPlus v-if="item.children && item.hideMenu != 1" :data="item" />
 				</div>
-
-				<!-- <a-sub-menu key="sub1">
-					<template #icon>
-						<MailOutlined />
-					</template>
-					<template #title>
-						Navigation One
-					</template>
-					<a-menu-item key="1">Option 1</a-menu-item>
-					<a-menu-item key="2">Option 2</a-menu-item>
-					<a-menu-item key="3">Option 3</a-menu-item>
-					<a-menu-item key="4">Option 4</a-menu-item>
-				</a-sub-menu>
-				<a-sub-menu key="sub2">
-					<template #icon></template>
-					<template #title>
-						<AppstoreOutlined />
-						Navigation Two
-					</template>
-					<a-menu-item key="5">Option 5</a-menu-item>
-					<a-menu-item key="6">Option 6</a-menu-item>
-					<a-sub-menu key="sub3" title="Submenu">
-						<a-menu-item key="7">Option 7</a-menu-item>
-						<a-menu-item key="8">Option 8</a-menu-item>
-					</a-sub-menu>
-				</a-sub-menu>
-				<a-sub-menu key="sub4">
-					<template #icon>
-						<SettingOutlined />
-					</template>
-					<template #title>
-						Navigation Three
-					</template>
-					<a-menu-item key="9">Option 9</a-menu-item>
-					<a-menu-item key="10">Option 10</a-menu-item>
-					<a-menu-item key="11">Option 11</a-menu-item>
-					<a-menu-item key="12">Option 12</a-menu-item>
-				</a-sub-menu>
-			 -->
 			</a-menu>
 		</a-layout-sider>
 		<a-layout>
@@ -78,6 +39,7 @@ import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined
 } from '@ant-design/icons-vue';
+import { Icon } from '@/components/iconPlus';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
 import { useRouter } from 'vue-router';
@@ -91,7 +53,7 @@ const store = useStore();
 onMounted(() => {
 	getMenuMockFn();
 
-	console.log(window.location.pathname, menuList, '地址栏1');
+	console.log(window.location.pathname, menuData, '地址栏1');
 });
 
 let router = useRouter();
@@ -109,9 +71,24 @@ const getMenuMockFn = async () => {
 	console.log(res, '获取菜单3');
 };
 
-let menuList = computed(() => {
+// 菜单数据
+let menuData = computed(() => {
 	return store.getters['layouts/getMenuList'];
 });
+
+watch(
+	menuData,
+	(newValue, oldValue) => {
+		// 根据路由地址展开左侧菜单
+		let to = window.location.pathname.replace('/admin', '');
+		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
+		if (data && data.hideMenu != 1) {
+			state.openKeys = data.openKeys;
+		}
+		console.log('menuData变了', data, newValue.openKeys);
+	},
+	{ deep: true }
+);
 
 // 左侧菜单
 // const selectedKeys = ref(['8']);
@@ -128,7 +105,7 @@ const state = reactive({
 
 let oneLayerStr = computed(() => {
 	let str = '';
-	menuList.value.map(e => {
+	menuData.value.menuList.map(e => {
 		if (!e.children) {
 			str = str + `${e.path},`;
 		}
@@ -166,13 +143,15 @@ const onOpenChange = openKeys => {
 	console.log(openKeys, state.openKeys, '展开1');
 };
 
-// 监听路由
+// 监听路由 根据地址设置选中的菜单
 watch(
 	() => router.currentRoute.value.path,
 	(to, from) => {
 		//要执行的方法
 		state.selectedKeys = [to];
-		console.log(to, from, state.selectedKeys, 'toPath');
+		// let arr = menuData.value.openKeys.filter((e) => e.path.indexOf(to) != -1);
+
+		console.log(to, from, state.selectedKeys, menuData.value, '路由1');
 	},
 	{ immediate: true, deep: true }
 );

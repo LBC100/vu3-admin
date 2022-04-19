@@ -1,30 +1,33 @@
 <template>
 	<!-- <div class=""></div> -->
-	<a-sub-menu :key="data.path" @titleClick="titleClick">
+	<a-sub-menu  :key="data.path" @titleClick="titleClick">
 		<template #icon>
-			<MailOutlined />
+			<Icon :icon="data.icon" />
 		</template>
 
 		<template #title>
 			<span>{{ data.meta.title }}</span>
 		</template>
 		<template v-if="data.children" v-for="item in data.children" :key="item.path">
-			<template v-if="!item.children">
+			<template v-if="!item.children && item.hideMenu != 1">
 				<a-menu-item :key="item.path">
 					<template #icon>
-						<PieChartOutlined />
+						<Icon :icon="item.icon" />
 					</template>
 					{{ item.meta.title }}
 				</a-menu-item>
 			</template>
-			<template v-else>
+			<template v-if="item.children && item.hideMenu != 1">
 				<subMenuPlus :data="item" :key="item.path" />
 			</template>
 		</template>
 	</a-sub-menu>
 </template>
 
+<!-- 递归菜单组件 -->
+
 <script>
+import { Icon } from '@/components/iconPlus';
 export default {
 	name: 'subMenuPlus'
 	// props: {
@@ -37,19 +40,7 @@ export default {
 </script>
 
 <script setup>
-import {
-	MailOutlined,
-	CalendarOutlined,
-	AppstoreOutlined,
-	SettingOutlined,
-	UserOutlined,
-	VideoCameraOutlined,
-	UploadOutlined,
-	MenuUnfoldOutlined,
-	MenuFoldOutlined
-} from '@ant-design/icons-vue';
 const { data } = defineProps({
-	// data: Array
 	data: {
 		type: Object,
 		default: () => ({
@@ -64,7 +55,7 @@ const { data } = defineProps({
 // console.log(data, '菜单1');
 const titleClick = (e, i) => {
 	// console.log(e, i, '菜单2');
-}
+};
 </script>
 
 <style lang="less" scoped></style>

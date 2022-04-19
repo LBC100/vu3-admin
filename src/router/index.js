@@ -8,6 +8,9 @@ import base from './modules/base.js'
 import set from './modules/set.js'
 import goods from './modules/goods.js'
 
+/**
+ * hideMenu: 1, // 1: 隐藏 0或不设置: 不隐藏 菜单隐藏, 直接输入路由可访问
+ */
 
 const routes = [
 	base,

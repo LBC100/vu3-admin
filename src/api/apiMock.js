@@ -16,6 +16,7 @@ export async function getMenuMock() {
 			{
 				path: '/base/home',
 				name: 'baseHome',
+				icon: 'HomeOutlined',
 				meta: {
 					title: '首页'
 				},
@@ -23,6 +24,8 @@ export async function getMenuMock() {
 			{
 				path: '/base/about',
 				name: 'baseAbout',
+				icon: 'BarsOutlined',
+				hideMenu: 1, // 菜单隐藏, 直接输入路由可访问
 				meta: {
 					title: '关于'
 				},
@@ -30,6 +33,7 @@ export async function getMenuMock() {
 			{
 				path: '/goods',
 				name: 'goods',
+				icon: 'BarsOutlined',
 				meta: {
 					title: '商品'
 				},
@@ -76,6 +80,7 @@ export async function getMenuMock() {
 							{
 								path: '/goods/womenShoes',
 								name: 'goodsWomenShoes',
+								hideMenu: 1,
 								meta: {
 									title: '女鞋'
 								},
