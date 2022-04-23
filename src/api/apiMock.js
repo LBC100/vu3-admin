@@ -26,6 +26,7 @@ export async function getMenuMock() {
 				name: 'baseAbout',
 				icon: 'BarsOutlined',
 				hideMenu: 1, // 菜单隐藏, 直接输入路由可访问
+				// auth: 0, // 1有权限, 0 无权限
 				meta: {
 					title: '关于'
 				},

@@ -3,7 +3,7 @@ import basicLayout from '@/layouts/basic-layout/index.vue'
 export default {
 	path: '/goods',
 	name: 'goods',
-	redirect: '/goods/clothing',
+	redirect: '/goods/menJacket',
 	component: basicLayout,
 	children: [
 		{
