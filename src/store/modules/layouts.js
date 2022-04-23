@@ -65,7 +65,7 @@ export default {
 			};
 
 			let copyMenuList = JSON.parse(JSON.stringify(state.menuList));
-			let copyMenuList02 = JSON.parse(JSON.stringify(state.menuList));
+			let copyMenuList02 = state.menuList
 
 			menuRecursionFor(copyMenuList, null, copyMenuList02);
 
