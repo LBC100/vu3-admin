@@ -141,6 +141,6 @@ export async function getMenuMock() {
 					
 		]
 	}
-	return promiseFunction(data)
+	return promiseFunction(data, 3000)
 }
 
