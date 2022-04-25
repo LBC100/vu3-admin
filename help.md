@@ -33,6 +33,12 @@ vuex
 		let dataList = computed(() => {
 			return store.state.dataList;
 		});
+		
+		// 菜单数据
+		let menuData = computed(() => {
+			return store.getters['layouts/getMenuList'];
+		});
+		
 　　//commit提交
 　　const myCommit = () =>{
 　　　　store.commit("commitValue");
@@ -65,13 +71,18 @@ vuex
 	dayjs().format('YYYY-MM-DD');
 
 跳转
-this.$router.push();
-	this.$router.push({
-		path: '/admin/systemSet/editRate',
-		query: {
-			data: JSON.stringify(newCheckListData)
-		}
-	});
+	import { useRoute, useRouter } from 'vue-router'
+
+	let route = useRoute();
+	let router = useRouter();
+
+	this.$router.push();
+		this.$router.push({
+			path: '/admin/systemSet/editRate',
+			query: {
+				data: JSON.stringify(newCheckListData)
+			}
+		});
 
 
 	this.opt = JSON.parse(this.$route.query.data);
