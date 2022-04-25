@@ -3,7 +3,7 @@ import {
 	createWebHistory
 } from 'vue-router'
 
-import awaitTo  from 'await-to-js';
+import awaitTo from 'await-to-js';
 import {
 	getMenuMock
 } from '@/api/apiMock.js';
@@ -40,7 +40,7 @@ const routes = [
 		},
 		component: () => import('@/views/403.vue')
 	},
-	
+
 	{
 		path: '/:pathMatch(.*)',
 		redirect: '/404'
@@ -49,7 +49,7 @@ const routes = [
 
 
 
-console.log(process.env, "全局文件1");
+// console.log(process.env, "全局文件1");
 const router = createRouter({
 	history: createWebHistory(process.env.VUE_APP_BASE_URL),
 	routes
@@ -60,35 +60,39 @@ const router = createRouter({
  */
 // store.dispatch('layouts/getMenuAction');
 router.beforeEach(async (to, from, next) => {
-	
-	if(to.path == '/403') {
+
+	if (to.path == '/403') {
 		next();
 		return true
 	}
-	
-	
+
+
 	// 获取菜单
-	let menuData =  store.getters['layouts/getMenuList'];
+	let menuData = store.getters['layouts/getMenuList'];
 	if (menuData.pathAllPermission.length == 0) { // 第一次初始化
 		const res = await store.dispatch('layouts/getMenuAction'); // 先请求一次
-		
-		menuData =  store.getters['layouts/getMenuList'];
-	}
-	
-	let pathAllPermission = menuData.pathAllPermission;
-	
-	if(pathAllPermission && pathAllPermission.length != 0) {
-		if(pathAllPermission.indexOf(to.path) != -1) { // 有权限
-			next();
-		}else { // 无权限
-			next({name: '403'});
-		}
-	}else {
-		next({name: '403'});
-	}
-	
 
-	console.log(pathAllPermission, to.path, from, '路由守卫1');
+		menuData = store.getters['layouts/getMenuList'];
+	}
+
+	let pathAllPermission = menuData.pathAllPermission;
+
+	if (pathAllPermission && pathAllPermission.length != 0) {
+		if (pathAllPermission.indexOf(to.path) != -1) { // 有权限
+			next();
+		} else { // 无权限
+			next({
+				path: '/403'
+			});
+		}
+	} else {
+		next({
+			path: '/403'
+		});
+	}
+
+
+	// console.log(pathAllPermission, to.path, from, '路由守卫1');
 	// next();
 	// next(false);
 })
