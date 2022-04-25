@@ -44,6 +44,18 @@ vuex
 　　　　store.commit("commitValue");
 　　}
 
+		this.$store.state.admin.order
+		this.$store.commit('模块名/', this.export_progress_store + 2)
+		this.$store.dispatch('模块名/get', {
+				dbName: 'sys',
+				path: 'user.info',
+				user: true
+		}).then(res => {
+				this.copyright += res.version ? '  |  ' + res.version : '';
+		})
+		
+		
+
 监听路由
 	// 监听路由
 	watch(
