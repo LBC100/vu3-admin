@@ -1,25 +1,10 @@
 /**
  * 布局
  */
-
-// 菜单递归
-const menuRecursion = (arr = [], treeNum = 0, ) => {
-	treeNum++;
-	return arr.map((ei, index) => {
-		// 子集
-		if (ei.children) {
-			// 初始化
-			ei.children = menuRecursion(ei.children, treeNum);
-			ei.isRoot = false;
-		} else {
-			ei.isRoot = true;
-		}
-
-		ei.treeNum = treeNum;
-		return ei;
-	});
-};
-
+import to from 'await-to-js';
+import {
+	getMenuMock
+} from '@/api/apiMock.js';
 
 
 export default {
@@ -69,7 +54,8 @@ export default {
 
 			menuRecursionFor(copyMenuList, null, copyMenuList02);
 
-			console.log(openKeysArr, state.menuList, pathAllPermission, "递归菜单3");
+			// console.log(openKeysArr, state.menuList, pathAllPermission, "递归菜单3");
+			// pathAllPermission.push('/403');
 			return {
 				menuList: state.menuList, // 左侧菜单
 				openKeys: openKeysArr, // 路由展开
@@ -84,6 +70,16 @@ export default {
 
 	},
 	actions: {
+		async getMenuAction(context) {
+			const [err, res] = await to(getMenuMock());
+			if (err) {
+				console.log('获取菜单报错5' );
+			}
 
+			console.log(res, 'actions 获取菜单1');
+			context.commit('setMenu', res.data);
+			return res
+			// context.commit('addNum', num);
+		},
 	}
 }

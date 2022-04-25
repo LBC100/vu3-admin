@@ -59,36 +59,22 @@ onMounted(() => {
 let router = useRouter();
 
 // 获取菜单
+onMounted(() => {
+	// store.dispatch('layouts/getMenuAction');
+});
 // const menuList = ref([]);
 const getMenuMockFn = async () => {
 	// const res = await getMenuMock();
-	const [err, res] = await to(getMenuMock());
-	if (err) {
-	}
+	// const [err, res] = await to(getMenuMock());
+	// if (err) {
+	// }
 
-	store.commit('layouts/setMenu', res.data);
+	// store.commit('layouts/setMenu', res.data);
 
-	console.log(res, '获取菜单3');
+	// console.log(res, '获取菜单3');
 };
 
-// 菜单数据
-let menuData = computed(() => {
-	return store.getters['layouts/getMenuList'];
-});
 
-watch(
-	menuData,
-	(newValue, oldValue) => {
-		// 根据路由地址展开左侧菜单
-		let to = window.location.pathname.replace('/admin', '');
-		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
-		if (data && data.hideMenu != 1) {
-			state.openKeys = data.openKeys;
-		}
-		console.log('menuData变了', data, newValue.openKeys);
-	},
-	{ deep: true }
-);
 
 // 左侧菜单
 // const selectedKeys = ref(['8']);
@@ -114,6 +100,25 @@ let oneLayerStr = computed(() => {
 	return str;
 });
 
+// 菜单数据
+let menuData = computed(() => {
+	return store.getters['layouts/getMenuList'];
+});
+
+watch(
+	menuData,
+	(newValue, oldValue) => {
+		// 根据路由地址展开左侧菜单
+		let to = window.location.pathname.replace('/admin', '');
+		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
+		if (data && data.openKeys && data.hideMenu != 1) {
+			state.openKeys = data.openKeys;
+		}
+		// console.log('menuData变了', data, to, newValue, oldValue);
+	},
+	{ deep: true,  immediate: true}
+);
+
 const clickMenu = e => {
 	if (oneLayerStr.value.indexOf(e.key) != -1) {
 		// 没有子菜单
@@ -128,6 +133,8 @@ const clickMenu = e => {
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
 
 const onOpenChange = openKeys => {
+	console.log(openKeys, state, '展开1');
+	
 	const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
 
 	if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -151,7 +158,7 @@ watch(
 		state.selectedKeys = [to];
 		// let arr = menuData.value.openKeys.filter((e) => e.path.indexOf(to) != -1);
 
-		console.log(to, from, state.selectedKeys, menuData.value, '路由1');
+		// console.log(to, from, state.selectedKeys, menuData.value, '路由1');
 	},
 	{ immediate: true, deep: true }
 );
