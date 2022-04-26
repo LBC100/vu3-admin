@@ -65,7 +65,12 @@ router.beforeEach(async (to, from, next) => {
 
 	// console.log(to.path, whitelist.indexOf(to.path));
 	// 免验证白名单
-	if (Config.routeWhiteList.indexOf(to.path) != -1) {
+	let newRouteWhiteList = Config.routeWhiteList.map((e) => e.path);
+	let indexWhiteList = newRouteWhiteList.indexOf(to.path) 
+	if (indexWhiteList != -1) {
+		if(Config.routeWhiteList[indexWhiteList].requestMenu) {
+			store.dispatch('layouts/getMenuAction'); // 先请求一次左侧菜单(左侧菜单亦是权限列表) 异步
+		}
 		next();
 		return true
 	}
@@ -74,12 +79,16 @@ router.beforeEach(async (to, from, next) => {
 	// 获取菜单
 	let menuData = store.getters['layouts/getMenuList'];
 	if (menuData.pathAllPermission.length == 0) { // 第一次初始化
-		const res = await store.dispatch('layouts/getMenuAction'); // 先请求一次
+		const res = await store.dispatch('layouts/getMenuAction'); // 先请求一次左侧菜单(左侧菜单亦是权限列表) 同步
 
 		menuData = store.getters['layouts/getMenuList'];
 	}
+	
+	
 
 	let pathAllPermission = menuData.pathAllPermission;
+	
+	console.log(pathAllPermission, menuData, to.path, from, '路由守卫1');
 
 	if (pathAllPermission && pathAllPermission.length != 0) {
 		if (pathAllPermission.indexOf(to.path) != -1) { // 有权限
@@ -96,7 +105,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 
 
-	// console.log(pathAllPermission, to.path, from, '路由守卫1');
+	
 	// next();
 	// next(false);
 })

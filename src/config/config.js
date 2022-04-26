@@ -22,8 +22,21 @@ if (NODE_ENV === 'development') {
 	UPLOAD_URL = `${location.origin}/upload/v1`;
 }
 
-// 路由白名单 不用校验权限
-let routeWhiteList = ['/403', '/404', '/user/login'];
+// 路由白名单 不用校验权限 requestMenu: 请求菜单. 免验证页面默认不请求菜单
+let routeWhiteList = [{
+		path: '/403'
+	},
+	{
+		path: '/404'
+	},
+	{
+		path: '/user/login'
+	},
+	{
+		path: '/base/home',
+		requestMenu: true
+	},
+];
 
 
 

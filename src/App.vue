@@ -23,14 +23,19 @@ export default {
 			return this.$store.getters['layouts/getMenuList'];
 		}
 	},
+	beforeCreate() {
+		// const res = this.$store.dispatch('layouts/getMenuAction'); // 先请求一次
+	},
 	created() {
 		let path = window.location.pathname.replace(process.env.VUE_APP_BASE_URL, '');
+		let newRouteWhiteList = Config.routeWhiteList.map((e) => e.path);
 		// 白名单路由直接显示 免验证
-		if (Config.routeWhiteList.indexOf(path) != -1) {
+		if (newRouteWhiteList.indexOf(path) != -1) {
 			this.noVerification = true;
 		} else {
 			this.noVerification = false;
 		}
+		
 		// console.log(this.$route, window.location.pathname, path, 'app - created');
 	},
 	mounted() {
