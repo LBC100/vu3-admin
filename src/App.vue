@@ -1,19 +1,21 @@
 <template>
 	<div id="app">
-		<div v-if="layoutsComputed.menuList.length == 0" class="">
-			<a-spin tip="正在验证权限..." :spinning="layoutsComputed.menuList.length == 0"></a-spin>
-			<!-- 正在验证权限... -->
-		</div>
+		<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class=""><a-spin tip="正在验证权限..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
 
-		<router-view v-show="layoutsComputed.menuList.length != 0" />
+		<router-view v-show="layoutsComputed.menuList.length != 0 || noVerification" />
+
+		<!-- <router-view /> -->
 	</div>
 </template>
 
 <script>
+import Config from '@/config/config.js';
 export default {
 	name: 'app',
 	data() {
-		return {};
+		return {
+			noVerification: false
+		};
 	},
 	watch: {},
 	computed: {
@@ -21,7 +23,19 @@ export default {
 			return this.$store.getters['layouts/getMenuList'];
 		}
 	},
-	mounted() {}
+	created() {
+		let path = window.location.pathname.replace(process.env.VUE_APP_BASE_URL, '');
+		// 白名单路由直接显示 免验证
+		if (Config.routeWhiteList.indexOf(path) != -1) {
+			this.noVerification = true;
+		} else {
+			this.noVerification = false;
+		}
+		// console.log(this.$route, window.location.pathname, path, 'app - created');
+	},
+	mounted() {
+		// console.log(this.$route, window.location, 'app - mounted');
+	}
 };
 </script>
 

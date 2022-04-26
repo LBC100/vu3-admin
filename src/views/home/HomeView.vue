@@ -6,6 +6,7 @@
 		<div class="" v-for="(item, index) in arr" :key="index">{{ item }}</div>
 		{{ obj }}
 		<a-button type="primary" @click="toAbout">去关于</a-button>
+		<a-button type="primary" @click="router.push('/user/login')">去登录</a-button>
 		<img alt="Vue logo" src="@/assets/logo.png" />
 		<HelloWorld msg="Welcome to Your Vue.js App" />
 	</div>

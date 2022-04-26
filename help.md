@@ -161,7 +161,7 @@ export { setLocal, getLocal, removeLocal }
 
 
 
-精确计算
+精确计算 [](https://www.jianshu.com/p/37829c87faa9)
 
   import Decimal from 'decimal.js';
    let num = new Decimal(this[key]).toNumber().toFixed(2);
