@@ -7,11 +7,12 @@ import awaitTo from 'await-to-js';
 import {
 	getMenuMock
 } from '@/api/apiMock.js';
+import Config from '@/config/config.js';
 
 import store from '@/store/index'
 
-import basicLayout from '@/layouts/basic-layout/index.vue'
 import base from './modules/base.js'
+import user from './modules/user.js'
 import set from './modules/set.js'
 import goods from './modules/goods.js'
 
@@ -23,6 +24,7 @@ import goods from './modules/goods.js'
 const routes = [
 	base,
 	goods,
+	user,
 	set,
 	{
 		path: '/404',
@@ -61,7 +63,9 @@ const router = createRouter({
 // store.dispatch('layouts/getMenuAction');
 router.beforeEach(async (to, from, next) => {
 
-	if (to.path == '/403') {
+	// console.log(to.path, whitelist.indexOf(to.path));
+	// 免验证白名单
+	if (Config.routeWhiteList.indexOf(to.path) != -1) {
 		next();
 		return true
 	}
