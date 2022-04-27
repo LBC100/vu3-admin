@@ -92,6 +92,7 @@ let oneLayerStr = computed(() => {
 		if (!e.children) {
 			arr.push(e.path);
 		}
+		
 	});
 
 	return arr;
@@ -123,7 +124,7 @@ const clickMenu = e => {
 		state.openKeys = [];
 	}
 
-	// router.push(e.key);
+	router.push(e.key);
 
 	// console.log(e, oneLayerStr,  '菜单点击1');
 };
