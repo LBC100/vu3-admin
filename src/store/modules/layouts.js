@@ -11,6 +11,7 @@ export default {
 	namespaced: true,
 	state: {
 		menuList: [], // 菜单
+		openKeysStore: [], // 左侧菜单选中展开列表
 	},
 	getters: {
 		getMenuList(state) {
@@ -66,7 +67,10 @@ export default {
 	mutations: {
 		setMenu(state, list = []) {
 			state.menuList = list;
-		}
+		},
+		setOpenKeysStore(state, list = []) {
+			state.openKeysStore = list;
+		},
 
 	},
 	actions: {
