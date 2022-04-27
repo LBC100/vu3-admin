@@ -28,9 +28,10 @@ export default {
 	},
 	created() {
 		let path = window.location.pathname.replace(process.env.VUE_APP_BASE_URL, '');
-		let newRouteWhiteList = Config.routeWhiteList.map((e) => e.path);
+		let boolanRouteWhiteList = Config.routeWhiteList.find((e) => e.path == path);
+		
 		// 白名单路由直接显示 免验证
-		if (newRouteWhiteList.indexOf(path) != -1) {
+		if (boolanRouteWhiteList) {
 			this.noVerification = true;
 		} else {
 			this.noVerification = false;
