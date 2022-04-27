@@ -68,13 +68,9 @@ const getMenuMockFn = async () => {
 	// const [err, res] = await to(getMenuMock());
 	// if (err) {
 	// }
-
 	// store.commit('layouts/setMenu', res.data);
-
 	// console.log(res, '获取菜单3');
 };
-
-
 
 // 左侧菜单
 // const selectedKeys = ref(['8']);
@@ -89,15 +85,16 @@ const state = reactive({
 	selectedKeys: []
 });
 
+// 一层左侧菜单
 let oneLayerStr = computed(() => {
-	let str = '';
+	let arr = [];
 	menuData.value.menuList.map(e => {
 		if (!e.children) {
-			str = str + `${e.path},`;
+			arr.push(e.path);
 		}
 	});
-	console.log(str, '过滤');
-	return str;
+
+	return arr;
 });
 
 // 菜单数据
@@ -110,22 +107,23 @@ watch(
 	(newValue, oldValue) => {
 		// 根据路由地址展开左侧菜单
 		let to = window.location.pathname.replace('/admin', '');
-		let data = newValue.openKeys.filter(e => e.path.indexOf(to) != -1)[0];
+		let data = newValue.openKeys.find(e => e.path.indexOf(to) != -1);
+
 		if (data && data.openKeys && data.hideMenu != 1) {
 			state.openKeys = data.openKeys;
 		}
 		// console.log('menuData变了', data, to, newValue, oldValue);
 	},
-	{ deep: true,  immediate: true}
+	{ deep: true, immediate: true }
 );
 
 const clickMenu = e => {
-	if (oneLayerStr.value.indexOf(e.key) != -1) {
+	if (oneLayerStr.value.find(j => j == e.key)) {
 		// 没有子菜单
 		state.openKeys = [];
 	}
 
-	router.push(e.key);
+	// router.push(e.key);
 
 	// console.log(e, oneLayerStr,  '菜单点击1');
 };
@@ -134,7 +132,7 @@ const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
 
 const onOpenChange = openKeys => {
 	console.log(openKeys, state, '展开1');
-	
+
 	const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
 
 	if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -154,7 +152,7 @@ const onOpenChange = openKeys => {
 watch(
 	() => router.currentRoute.value.path,
 	(to, from) => {
-		//要执行的方法
+		// 要执行的方法
 		state.selectedKeys = [to];
 		// let arr = menuData.value.openKeys.filter((e) => e.path.indexOf(to) != -1);
 

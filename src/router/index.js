@@ -63,17 +63,20 @@ const router = createRouter({
 // store.dispatch('layouts/getMenuAction');
 router.beforeEach(async (to, from, next) => {
 
-	// console.log(to.path, whitelist.indexOf(to.path));
+
 	// 免验证白名单
-	let newRouteWhiteList = Config.routeWhiteList.map((e) => e.path);
-	let indexWhiteList = newRouteWhiteList.indexOf(to.path) 
-	if (indexWhiteList != -1) {
-		if(Config.routeWhiteList[indexWhiteList].requestMenu) {
+	let indexWhiteItem = Config.routeWhiteList.find((e)=> e.path == to.path);
+	
+	// console.log(indexWhiteItem, '白名单1');
+
+	if (indexWhiteItem) {
+		if (indexWhiteItem.requestMenu) {
 			store.dispatch('layouts/getMenuAction'); // 先请求一次左侧菜单(左侧菜单亦是权限列表) 异步
 		}
 		next();
 		return true
 	}
+
 
 
 	// 获取菜单
@@ -83,15 +86,16 @@ router.beforeEach(async (to, from, next) => {
 
 		menuData = store.getters['layouts/getMenuList'];
 	}
-	
-	
+
+
 
 	let pathAllPermission = menuData.pathAllPermission;
-	
+
 	console.log(pathAllPermission, menuData, to.path, from, '路由守卫1');
 
 	if (pathAllPermission && pathAllPermission.length != 0) {
-		if (pathAllPermission.indexOf(to.path) != -1) { // 有权限
+		let boolanPermission = pathAllPermission.find((e) => e == to.path)
+		if (boolanPermission) { // 有权限
 			next();
 		} else { // 无权限
 			next({
@@ -105,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 
 
-	
+
 	// next();
 	// next(false);
 })
