@@ -28,17 +28,7 @@
 </template>
 
 <script setup>
-import {
-	MailOutlined,
-	CalendarOutlined,
-	AppstoreOutlined,
-	SettingOutlined,
-	UserOutlined,
-	VideoCameraOutlined,
-	UploadOutlined,
-	MenuUnfoldOutlined,
-	MenuFoldOutlined
-} from '@ant-design/icons-vue';
+	
 import { Icon } from '@/components/iconPlus';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
@@ -46,8 +36,8 @@ import { useRouter } from 'vue-router';
 import subMenuPlus from './subMenuPlus';
 
 import to from 'await-to-js';
-import { useStore } from 'vuex';
 
+import { useStore } from 'vuex';
 const store = useStore();
 
 onMounted(() => {
@@ -85,6 +75,11 @@ const state = reactive({
 	selectedKeys: []
 });
 
+// 左侧菜单选中展开列表
+let openKeysStore = computed(() => {
+	return store.state.layouts.openKeysStore;
+});
+
 // 一层左侧菜单
 let oneLayerStr = computed(() => {
 	let arr = [];
@@ -103,14 +98,16 @@ let menuData = computed(() => {
 	return store.getters['layouts/getMenuList'];
 });
 
+// 根据路由地址展开左侧菜单
 watch(
 	menuData,
 	(newValue, oldValue) => {
-		// 根据路由地址展开左侧菜单
+		
 		let to = window.location.pathname.replace('/admin', '');
 		let data = newValue.openKeys.find(e => e.path.indexOf(to) != -1);
 
 		if (data && data.openKeys && data.hideMenu != 1) {
+			// store.commit("layouts/setOpenKeysStore", data.openKeys);
 			state.openKeys = data.openKeys;
 		}
 		// console.log('menuData变了', data, to, newValue, oldValue);
@@ -132,7 +129,8 @@ const clickMenu = e => {
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
 
 const onOpenChange = openKeys => {
-	console.log(openKeys, state, '展开1');
+	return
+	// console.log(openKeys, state, '展开1');
 
 	const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
 
@@ -146,7 +144,7 @@ const onOpenChange = openKeys => {
 	// 	state.openKeys = [state.openKeys[0], state.openKeys[2]];
 	// }
 
-	console.log(openKeys, state.openKeys, '展开1');
+	// console.log(openKeys, state.openKeys, '展开1');
 };
 
 // 监听路由 根据地址设置选中的菜单

@@ -41,7 +41,7 @@ vuex
 		
 　　//commit提交
 　　const myCommit = () =>{
-　　　　store.commit("commitValue");
+　　　　store.commit("layouts/setOpenKeysStore", data.openKeys);
 　　}
 
 		this.$store.state.admin.order
