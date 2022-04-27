@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class=""><a-spin tip="正在验证权限..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
+		<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class="loading-container"><a-spin class="spin" tip="正在加载..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
 
 		<router-view v-show="layoutsComputed.menuList.length != 0 || noVerification" />
 
@@ -52,5 +52,16 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	height: 100%;
+}
+.loading-container {
+	height: 100vh;
+	position: relative;
+	
+	.spin {
+		position: absolute;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+	}
 }
 </style>
