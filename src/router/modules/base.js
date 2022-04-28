@@ -1,7 +1,7 @@
 import basicLayout from '@/layouts/basicLayout/index.vue'
 
 export default {
-	path: '/',
+	path: '/base',
 	name: 'base',
 	redirect: '/base/home',
 	component: basicLayout,

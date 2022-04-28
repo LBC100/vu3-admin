@@ -27,7 +27,7 @@ export default {
 		// const res = this.$store.dispatch('layouts/getMenuAction'); // 先请求一次
 	},
 	created() {
-		let path = window.location.pathname.replace(process.env.VUE_APP_BASE_URL, '');
+		let path = window.location.pathname.replace(Config.routeBaseURL, '');
 		let boolanRouteWhiteList = Config.routeWhiteList.find((e) => e.path == path);
 		
 		// 白名单路由直接显示 免验证

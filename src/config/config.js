@@ -24,6 +24,9 @@ if (NODE_ENV === 'development') {
 
 // 路由白名单 不用校验权限 requestMenu: 请求菜单. 免验证页面默认不请求菜单
 let routeWhiteList = [{
+		path: '/'
+	},
+	{
 		path: '/403'
 	},
 	{
@@ -44,6 +47,9 @@ let routeWhiteList = [{
 const Config = {
 	VERSION: '1.0.0', // 版本号
 	routeWhiteList: routeWhiteList,
+	
+	rootPage: '/base/home',
+	routeBaseURL: '/admin',
 
 	// 接口请求地址
 
