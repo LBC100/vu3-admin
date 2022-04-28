@@ -21,5 +21,13 @@ export default {
 			},
 			component: () => import('@/views/about/AboutView.vue')
 		},
+		{
+			path: '/base/permission',
+			name: 'basePermission',
+			meta: {
+				title: '权限'
+			},
+			component: () => import('@/views/base/permission.vue')
+		},
 	]
 }

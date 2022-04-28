@@ -32,6 +32,14 @@ export async function getMenuMock() {
 				},
 			},
 			{
+				path: '/base/permission',
+				name: 'basePermission',
+				icon: 'HomeOutlined',
+				meta: {
+					title: '权限'
+				},
+			},
+			{
 				path: '/goods',
 				name: 'goods',
 				icon: 'BarsOutlined',
