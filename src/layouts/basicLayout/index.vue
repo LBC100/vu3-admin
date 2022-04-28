@@ -3,7 +3,7 @@
 		<a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
 			<div class="logo">123</div>
 
-			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeys" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
+			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeysStore" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
 				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
 					<a-menu-item v-if="!item.children && item.hideMenu != 1" :key="item.path">
 						<Icon :icon="item.icon" />
@@ -107,8 +107,8 @@ watch(
 		let data = newValue.openKeys.find(e => e.path.indexOf(to) != -1);
 
 		if (data && data.openKeys && data.hideMenu != 1) {
-			// store.commit("layouts/setOpenKeysStore", data.openKeys);
-			state.openKeys = data.openKeys;
+			store.commit("layouts/setOpenKeysStore", data.openKeys);
+			// state.openKeys = data.openKeys;
 		}
 		// console.log('menuData变了', data, to, newValue, oldValue);
 	},
@@ -129,6 +129,8 @@ const clickMenu = e => {
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
 
 const onOpenChange = openKeys => {
+	// console.log(openKeys, '改变1');
+	store.commit("layouts/setOpenChangeKeys", openKeys);
 	return
 	// console.log(openKeys, state, '展开1');
 

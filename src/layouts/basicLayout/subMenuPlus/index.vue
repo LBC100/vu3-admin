@@ -40,7 +40,7 @@ export default {
 </script>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, nextTick } from 'vue';
 
 import { useStore } from 'vuex';
 const store = useStore();
@@ -64,18 +64,36 @@ let menuData = computed(() => {
 	return store.getters['layouts/getMenuList'];
 });
 
+// 左侧菜单选中展开列表
+let openKeysStore = computed(() => {
+	return store.state.layouts.openKeysStore;
+});
+
+// 左侧菜单改变展开列表
+let openChangeKeys = computed(() => {
+	return store.state.layouts.openChangeKeys;
+});
+
 // console.log(data, '菜单1');
-const titleClick = (ev, data) => {
-	let item = menuData.value.openKeys.find(e => {
-		// e.pathKeyStr.indexOf(data.path)
-		if (e.pathKeyStr) {
-			return e.pathKeyStr.indexOf(data.path) != -1;
-		}
-		console.log(e.pathKeyStr, '测试1');
-	});
-	// store.commit("layouts/setOpenKeysStore", item.openKeys);
+const titleClick = async (ev, data) => {
+	let item = menuData.value.openKeys.find(e => e.name == data.name );
+	// let openKeysStoreStr = openKeysStore.value.join(',');
+	// let openKeysStr = item.openKeys.join(',');
+	// let arr = []
+	// if(openKeysStoreStr == openKeysStr) {
+	// 	for (let i = 0; i < item.openKeys.length - 1; i++) {
+	// 	  const element = item.openKeys[i];
+	// 	  arr.push(element)
+	// 	}
+	// }
+	await nextTick()	// 会返回一个Promise对象,所以可以使用await,等待nextTick()结束再执行后续操作
+	console.log(openChangeKeys.value, '菜单6 - a-sub-menu');
+	
+	store.commit("layouts/setOpenKeysStore", openChangeKeys);
 	// console.log(ev, data, menuData.value.openKeys, '菜单2 - a-sub-menu');
-	console.log(item.openKeys, menuData.value.openKeys, data, '菜单3 - a-sub-menu');
+	// console.log(item.openKeys, menuData.value.openKeys, data, '菜单3 - a-sub-menu');
+	console.log(openKeysStore.value, item.openKeys, '菜单5 - a-sub-menu');
+	
 };
 </script>
 

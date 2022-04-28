@@ -1,5 +1,6 @@
 <template>
 	<div class="home">
+		{{openKeysStore}}
 		{{ num }}
 		<a-button type="primary" @click="addNum">更改权限</a-button>
 
@@ -15,7 +16,7 @@
 <script setup>
 import HelloWorld from '@/components/HelloWorld.vue';
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,computed } from 'vue';
 
 import { useRoute, useRouter } from 'vue-router'
 
@@ -24,6 +25,11 @@ let router = useRouter();
 
 import { useStore } from 'vuex';
 const store = useStore();
+
+// 左侧菜单选中展开列表
+let openKeysStore = computed(() => {
+	return store.state.layouts.openKeysStore;
+});
 
 // 像在平常的setup中一样的写,但是不需要返回任何变量
 const num = ref(0); //在此处定义的 num 可以直接使用
