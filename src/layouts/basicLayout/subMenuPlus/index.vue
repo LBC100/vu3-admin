@@ -65,35 +65,33 @@ let menuData = computed(() => {
 });
 
 // 左侧菜单选中展开列表
-let openKeysStore = computed(() => {
-	return store.state.layouts.openKeysStore;
-});
+// let openKeysStore = computed(() => {
+// 	return store.state.layouts.openKeysStore;
+// });
 
 // 左侧菜单改变展开列表
 let openChangeKeys = computed(() => {
 	return store.state.layouts.openChangeKeys;
 });
 
-// console.log(data, '菜单1');
 const titleClick = async (ev, data) => {
-	let item = menuData.value.openKeys.find(e => e.name == data.name );
-	// let openKeysStoreStr = openKeysStore.value.join(',');
-	// let openKeysStr = item.openKeys.join(',');
-	// let arr = []
-	// if(openKeysStoreStr == openKeysStr) {
-	// 	for (let i = 0; i < item.openKeys.length - 1; i++) {
-	// 	  const element = item.openKeys[i];
-	// 	  arr.push(element)
-	// 	}
-	// }
-	await nextTick()	// 会返回一个Promise对象,所以可以使用await,等待nextTick()结束再执行后续操作
-	console.log(openChangeKeys.value, '菜单6 - a-sub-menu');
-	
-	store.commit("layouts/setOpenKeysStore", openChangeKeys);
-	// console.log(ev, data, menuData.value.openKeys, '菜单2 - a-sub-menu');
-	// console.log(item.openKeys, menuData.value.openKeys, data, '菜单3 - a-sub-menu');
-	console.log(openKeysStore.value, item.openKeys, '菜单5 - a-sub-menu');
-	
+	let item = menuData.value.openKeys.find(e => e.name == data.name);
+
+	// await nextTick()	// 会返回一个Promise对象,所以可以使用await,等待nextTick()结束再执行后续操作
+
+	nextTick(() => {
+		let arr = [];
+		for (let index = 0; index < item.openKeys.length; index++) {
+			const element = item.openKeys[index];
+
+			if (openChangeKeys.value.find(e => e == element)) {
+				arr.push(element);
+			}
+		}
+
+		store.commit('layouts/setOpenKeysStore', arr);
+		// console.log('openKeysStore.value nextTick =>', openKeysStore.value, 'old =>', openKeys, '点击item =>', item.openKeys, 'openChangeKeys =>', openChangeKeys.value, '过滤后 =>', arr, '菜单5 nextTick - a-sub-menu');
+	});
 };
 </script>
 
