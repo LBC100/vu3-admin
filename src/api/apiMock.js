@@ -93,6 +93,7 @@ export async function getMenuMock() {
 			{
 				path: '/plant',
 				name: 'plant',
+				icon: 'BarsOutlined',
 				meta: {
 					title: '植物/蔬菜'
 				},

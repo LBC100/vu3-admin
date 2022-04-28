@@ -1,3 +1,12 @@
-import { DatePicker, Input, Button, Layout,  Menu, Spin } from "ant-design-vue";
+import {
+	DatePicker,
+	Input,
+	Button,
+	Layout,
+	Menu,
+	Spin,
+	Popover,
+	Tooltip
+} from "ant-design-vue";
 
-export const antArr = [DatePicker, Input, Button, Layout, Menu, Spin ];
+export const antArr = [DatePicker, Input, Button, Layout, Menu, Spin, Popover, Tooltip];

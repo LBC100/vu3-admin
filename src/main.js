@@ -9,8 +9,12 @@ const app = createApp(App);
 import {
 	antArr
 } from "@/components/AntDesignVue.js";
+
 // 引入css
-// import 'ant-design-vue/dist/antd.css';
+import 'ant-design-vue/dist/antd.css';
+
+
+
 
 // 引入mockjs
 require('./mock/mock.js')
@@ -21,6 +25,8 @@ async function bootstrap() {
 	for (const item of antArr) {
 		app.use(item);
 	}
+	
+	
 
 
 	app.use(store);

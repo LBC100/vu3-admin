@@ -4,14 +4,14 @@
 			<div class="logo">123</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeysStore" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
-				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
+				<template class="" v-for="(item, index) in menuData.menuList" :key="item.path">
 					<a-menu-item v-if="!item.children && item.hideMenu != 1" :key="item.path">
 						<Icon :icon="item.icon" />
 						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 
 					<subMenuPlus v-if="item.children && item.hideMenu != 1" :data="item" />
-				</div>
+				</template>
 			</a-menu>
 		</a-layout-sider>
 		<a-layout>
