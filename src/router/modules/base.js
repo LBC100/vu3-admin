@@ -1,7 +1,7 @@
 import basicLayout from '@/layouts/basicLayout/index.vue'
 
 export default {
-	path: '/',
+	path: '/base',
 	name: 'base',
 	redirect: '/base/home',
 	component: basicLayout,
@@ -20,6 +20,14 @@ export default {
 				title: '关于'
 			},
 			component: () => import('@/views/about/AboutView.vue')
+		},
+		{
+			path: '/base/permission',
+			name: 'basePermission',
+			meta: {
+				title: '权限'
+			},
+			component: () => import('@/views/base/permission.vue')
 		},
 	]
 }

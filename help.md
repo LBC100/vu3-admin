@@ -54,7 +54,8 @@ vuex
 				this.copyright += res.version ? '  |  ' + res.version : '';
 		})
 		
-		
+全局配置
+	import Config from '@/config/config.js';
 
 监听路由
 	// 监听路由

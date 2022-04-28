@@ -22,6 +22,12 @@ import goods from './modules/goods.js'
  */
 
 const routes = [
+	// '/' 路由
+	{
+		path: '/',
+		name: '首页',
+		component: () => import('@/views/blank.vue')
+	},
 	base,
 	goods,
 	user,
@@ -53,7 +59,7 @@ const routes = [
 
 // console.log(process.env, "全局文件1");
 const router = createRouter({
-	history: createWebHistory(process.env.VUE_APP_BASE_URL),
+	history: createWebHistory(Config.routeBaseURL),
 	routes
 })
 
@@ -62,13 +68,24 @@ const router = createRouter({
  */
 // store.dispatch('layouts/getMenuAction');
 router.beforeEach(async (to, from, next) => {
+	
+	// console.log(indexWhiteItem, to, '白名单1');
+	
+	// '/' 默认页面开始 从 '/' =>  指定页面
+	// if(to.path == '/404' && to.redirectedFrom && to.redirectedFrom.path == '/') {
+	if(to.path == '/') {
+		next({
+			path: Config.rootPage,
+			replace: true
+		});
+		return true
+	}
+	// '/' 默认页面 结束
 
 
 	// 免验证白名单
-	let indexWhiteItem = Config.routeWhiteList.find((e)=> e.path == to.path);
+	let indexWhiteItem = Config.routeWhiteList.find((e) => e.path == to.path);
 	
-	// console.log(indexWhiteItem, '白名单1');
-
 	if (indexWhiteItem) {
 		if (indexWhiteItem.requestMenu) {
 			store.dispatch('layouts/getMenuAction'); // 先请求一次左侧菜单(左侧菜单亦是权限列表) 异步

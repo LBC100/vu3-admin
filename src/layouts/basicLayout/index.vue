@@ -4,14 +4,14 @@
 			<div class="logo">123</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeysStore" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
-				<div class="" v-for="(item, index) in menuData.menuList" :key="item.path">
+				<template class="" v-for="(item, index) in menuData.menuList" :key="item.path">
 					<a-menu-item v-if="!item.children && item.hideMenu != 1" :key="item.path">
 						<Icon :icon="item.icon" />
 						<span>{{ item.meta.title }}</span>
 					</a-menu-item>
 
 					<subMenuPlus v-if="item.children && item.hideMenu != 1" :data="item" />
-				</div>
+				</template>
 			</a-menu>
 		</a-layout-sider>
 		<a-layout>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-	
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { Icon } from '@/components/iconPlus';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
 import { getMenuMock } from '@/api/apiMock.js';
@@ -87,7 +87,6 @@ let oneLayerStr = computed(() => {
 		if (!e.children) {
 			arr.push(e.path);
 		}
-		
 	});
 
 	return arr;
@@ -102,12 +101,11 @@ let menuData = computed(() => {
 watch(
 	menuData,
 	(newValue, oldValue) => {
-		
 		let to = window.location.pathname.replace('/admin', '');
 		let data = newValue.openKeys.find(e => e.path.indexOf(to) != -1);
 
 		if (data && data.openKeys && data.hideMenu != 1) {
-			store.commit("layouts/setOpenKeysStore", data.openKeys);
+			store.commit('layouts/setOpenKeysStore', data.openKeys);
 			// state.openKeys = data.openKeys;
 		}
 		// console.log('menuData变了', data, to, newValue, oldValue);
@@ -118,7 +116,8 @@ watch(
 const clickMenu = e => {
 	if (oneLayerStr.value.find(j => j == e.key)) {
 		// 没有子菜单
-		state.openKeys = [];
+		store.commit('layouts/setOpenKeysStore', []);
+		// state.openKeys = [];
 	}
 
 	router.push(e.key);
@@ -129,24 +128,7 @@ const clickMenu = e => {
 const { rootSubmenuKeys, openKeys, selectedKeys } = toRefs(state);
 
 const onOpenChange = openKeys => {
-	// console.log(openKeys, '改变1');
-	store.commit("layouts/setOpenChangeKeys", openKeys);
-	return
-	// console.log(openKeys, state, '展开1');
-
-	const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
-
-	if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-		state.openKeys = openKeys;
-	} else {
-		state.openKeys = latestOpenKey ? [latestOpenKey] : [];
-	}
-
-	// if (state.openKeys.length == 3) {
-	// 	state.openKeys = [state.openKeys[0], state.openKeys[2]];
-	// }
-
-	// console.log(openKeys, state.openKeys, '展开1');
+	store.commit('layouts/setOpenChangeKeys', openKeys);
 };
 
 // 监听路由 根据地址设置选中的菜单
