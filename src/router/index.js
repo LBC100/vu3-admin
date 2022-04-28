@@ -22,13 +22,12 @@ import goods from './modules/goods.js'
  */
 
 const routes = [
-	// '/' 路由重定向
-	// {
-	// 	path: '/',
-	// 	name: '首页',
-	// 	redirect: '/base/home',
-	// 	component: () => import('@/views/home/blank.vue')
-	// },
+	// '/' 路由
+	{
+		path: '/',
+		name: '首页',
+		component: () => import('@/views/blank.vue')
+	},
 	base,
 	goods,
 	user,
@@ -72,8 +71,9 @@ router.beforeEach(async (to, from, next) => {
 	
 	// console.log(indexWhiteItem, to, '白名单1');
 	
-	// '/' 默认页面开始 从 '/' => 404 => 指定页面
-	if(to.path == '/404' && to.redirectedFrom && to.redirectedFrom.path == '/') {
+	// '/' 默认页面开始 从 '/' =>  指定页面
+	// if(to.path == '/404' && to.redirectedFrom && to.redirectedFrom.path == '/') {
+	if(to.path == '/') {
 		next({
 			path: Config.rootPage,
 			replace: true
