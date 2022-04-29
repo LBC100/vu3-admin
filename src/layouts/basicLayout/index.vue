@@ -31,7 +31,7 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { Icon } from '@/components/iconPlus';
 import { defineComponent, ref, computed, onMounted, watch, reactive, toRefs } from 'vue';
-import { getMenuMock } from '@/api/apiMock.js';
+import { getMenuAndPermissionCodesMock } from '@/api/apiMock.js';
 import { useRouter } from 'vue-router';
 import subMenuPlus from './subMenuPlus';
 
@@ -41,7 +41,7 @@ import { useStore } from 'vuex';
 const store = useStore();
 
 onMounted(() => {
-	getMenuMockFn();
+	getMenuAndPermissionCodesMockFn();
 
 	console.log(window.location.pathname, menuData, '地址栏1');
 });
@@ -53,9 +53,9 @@ onMounted(() => {
 	// store.dispatch('layouts/getMenuAction');
 });
 // const menuList = ref([]);
-const getMenuMockFn = async () => {
-	// const res = await getMenuMock();
-	// const [err, res] = await to(getMenuMock());
+const getMenuAndPermissionCodesMockFn = async () => {
+	// const res = await getMenuAndPermissionCodesMock();
+	// const [err, res] = await to(getMenuAndPermissionCodesMock());
 	// if (err) {
 	// }
 	// store.commit('layouts/setMenu', res.data);

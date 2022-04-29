@@ -10,10 +10,10 @@ const promiseFunction = async (data = {}, delay = 500) => {
 
 
 // 获取菜单
-export async function getMenuMock() {
+export async function getMenuAndPermissionCodesMock() {
 	let data = {
-		data: [
-			{
+		roleName: 'admin',
+		menuData: [{
 				path: '/base/home',
 				name: 'baseHome',
 				icon: 'HomeOutlined',
@@ -46,31 +46,26 @@ export async function getMenuMock() {
 				meta: {
 					title: '商品'
 				},
-				children: [
-					{
+				children: [{
 						path: '/goods/clothing',
 						name: 'goodsClothing',
 						meta: {
 							title: '衣服'
 						},
-						children: [
-							{
-								path: '/goods/jacket',
-								name: 'goodsJacket',
-								meta: {
-									title: '夹克'
-								},
-								children: [
-									{
-										path: '/goods/menJacket',
-										name: 'goodsMenJacket',
-										meta: {
-											title: '男夹克'
-										},
-									},
-								]
+						children: [{
+							path: '/goods/jacket',
+							name: 'goodsJacket',
+							meta: {
+								title: '夹克'
 							},
-						]
+							children: [{
+								path: '/goods/menJacket',
+								name: 'goodsMenJacket',
+								meta: {
+									title: '男夹克'
+								},
+							}, ]
+						}, ]
 					},
 					{
 						path: '/goods/shoe',
@@ -78,8 +73,7 @@ export async function getMenuMock() {
 						meta: {
 							title: '鞋子'
 						},
-						children: [
-							{
+						children: [{
 								path: '/goods/menShoes',
 								name: 'goodsMenShoes',
 								meta: {
@@ -105,22 +99,19 @@ export async function getMenuMock() {
 				meta: {
 					title: '植物/蔬菜'
 				},
-				children: [
-					{
+				children: [{
 						path: '/plant/Tree',
 						name: 'plantTree',
 						meta: {
 							title: '树'
 						},
-						children: [
-							{
-								path: '/plant/appleTree',
-								name: 'goodsAppleTree',
-								meta: {
-									title: '苹果树'
-								},
+						children: [{
+							path: '/plant/appleTree',
+							name: 'goodsAppleTree',
+							meta: {
+								title: '苹果树'
 							},
-						]
+						}, ]
 					},
 					{
 						path: '/plant/radish',
@@ -128,8 +119,7 @@ export async function getMenuMock() {
 						meta: {
 							title: '萝卜'
 						},
-						children: [
-							{
+						children: [{
 								path: '/plant/whiteRadish',
 								name: 'plantWhiteRadish',
 								meta: {
@@ -147,9 +137,10 @@ export async function getMenuMock() {
 					}
 				]
 			},
-					
-		]
+
+		],
+		permissionCodeTag: '管理员',
+		permissionCodes: [1000, 1001, 1009]
 	}
 	return promiseFunction(data, 500)
 }
-

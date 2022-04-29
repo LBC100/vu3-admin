@@ -13,7 +13,9 @@ import {
 // 引入css
 import 'ant-design-vue/dist/antd.css';
 
-
+// 自定义指令
+import registerDirectives from '@/directives'
+registerDirectives(app); // 注册指令
 
 
 // 引入mockjs

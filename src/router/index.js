@@ -5,7 +5,7 @@ import {
 
 import awaitTo from 'await-to-js';
 import {
-	getMenuMock
+	getMenuAndPermissionCodesMock
 } from '@/api/apiMock.js';
 import Config from '@/config/config.js';
 

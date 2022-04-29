@@ -78,6 +78,19 @@ vuex
 		}
 	);
 
+// props
+const { data } = defineProps({
+	data: {
+		type: Object,
+		default: () => ({
+			data: {
+				meta: {
+					title: ''
+				}
+			}
+		})
+	}
+});
 
 时间
 	const dayjs = require('dayjs');

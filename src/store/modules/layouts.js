@@ -3,7 +3,7 @@
  */
 import to from 'await-to-js';
 import {
-	getMenuMock
+	getMenuAndPermissionCodesMock
 } from '@/api/apiMock.js';
 
 
@@ -13,6 +13,12 @@ export default {
 		menuList: [], // 菜单
 		openKeysStore: [], // 左侧菜单选中展开列表
 		openChangeKeys: [],
+		menuAndPermissionCodeData: {
+			roleName: '',
+			menuData: [],
+			permissionCodeTag: '',
+			permissionCodes: []
+		},
 	},
 	getters: {
 		getMenuList(state) {
@@ -46,19 +52,19 @@ export default {
 							item.pathKeyStr = fatherItem.path;
 
 							item.openKeys = fatherItem.path.split(',');
-							
+
 							// console.log(item,  "1递归菜单7");
 						}
 						openKeysArr.push(item);
-						
+
 						// console.log(item, i, "1递归菜单7");
 					}
-					
+
 					// if (fatherItem) {
 					// 	item.pathKeyStr = fatherItem.path;
 					// 	item.openKeys = fatherItem.path.split(',');
 					// }
-					
+
 					// openKeysArr.push(item);
 					// console.log(item, "递归菜单2");
 				}
@@ -70,7 +76,7 @@ export default {
 			menuRecursionFor(copyMenuList, null, copyMenuList02);
 
 			// console.log(openKeysArr, state.menuList, pathAllPermission, "递归菜单3");
-			console.log(openKeysArr,  "递归展开菜单1");
+			console.log(openKeysArr, "递归展开菜单1");
 			// console.log(JSON.stringify(openKeysArr), "递归展开菜单2");
 			// pathAllPermission.push('/403');
 			return {
@@ -79,6 +85,11 @@ export default {
 				pathAllPermission: pathAllPermission // 所有权限
 			};
 		},
+		getPermissionCodes(state) {
+			return {
+				permissionCodes: state.menuAndPermissionCodeData.permissionCodes
+			}
+		}
 	},
 	mutations: {
 		setMenu(state, list = []) {
@@ -90,17 +101,21 @@ export default {
 		setOpenChangeKeys(state, list = []) {
 			state.openChangeKeys = list;
 		},
+		setMenuAndPermissionCodeData(state, data={}) {
+			state.menuAndPermissionCodeData = data;
+		},
 
 	},
 	actions: {
 		async getMenuAction(context) {
-			const [err, res] = await to(getMenuMock());
+			const [err, res] = await to(getMenuAndPermissionCodesMock());
 			if (err) {
-				console.log('获取菜单报错5' );
+				console.log('获取菜单报错5');
 			}
 
 			console.log(res, 'actions 获取菜单1');
-			context.commit('setMenu', res.data);
+			context.commit('setMenu', res.menuData);
+			context.commit('setMenuAndPermissionCodeData', res);
 			return res
 			// context.commit('addNum', num);
 		},
