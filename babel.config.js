@@ -17,7 +17,9 @@ module.exports = {
 				style: true
 			},
 		], // `style: true` for less
+
+		...proPlugins,
 	],
-	
-	...proPlugins,
+
+
 }
