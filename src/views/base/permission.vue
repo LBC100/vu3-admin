@@ -3,7 +3,7 @@
 		权限 {{ permissionCodes }}
 		<a-button>测试权限</a-button>
 		<a-button v-permission="{ code: [2000, 2001] }">测试权限显示 - 指令 - 指令方式不能动态更改权限</a-button>
-		
+
 		<authority :value="{ code: [2001] }"><a-button>测试权限显示 - 动态</a-button></authority>
 
 		<a-button type="primary" @click="addNum">更改权限</a-button>
@@ -22,6 +22,15 @@ let router = useRouter();
 
 import { useStore } from 'vuex';
 const store = useStore();
+
+onMounted(() => {
+	let myrng = new Math.seedrandom('hello.');
+	console.log(myrng(), '随机1'); // Always 0.9282578795792454
+	console.log(myrng(), '随机2'); // Always 0.3752569768646784
+	
+	let prng = new Math.seedrandom('added entropy.', { entropy: true });
+	console.log(prng(), '随机3');
+});
 
 // 权限码
 let permissionCodes = computed(() => {

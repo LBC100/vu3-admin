@@ -17,6 +17,7 @@ export async function getMenuAndPermissionCodesMock() {
 				path: '/base/home',
 				name: 'baseHome',
 				icon: 'HomeOutlined',
+				// icon: 'home-outlined',
 				meta: {
 					title: '首页'
 				},
