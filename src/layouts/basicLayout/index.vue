@@ -22,7 +22,13 @@
 				</div>
 				<div class="right-box">右侧</div>
 			</a-layout-header>
-			<a-layout-content :style="{ margin: '16px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"><router-view /></a-layout-content>
+			<!-- 内容 -->
+
+			<a-layout-content :style="{ margin: '16px 16px', padding: '24px', background: '#fff', minHeight: '280px' }">
+				<router-view v-slot="{ Component }">
+					<transition name="fade" mode="out-in"><component :is="Component" /></transition>
+				</router-view>
+			</a-layout-content>
 		</a-layout>
 	</a-layout>
 </template>
@@ -145,6 +151,15 @@ watch(
 );
 </script>
 <style lang="less" scoped>
+// 过渡效果
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	opacity: 0;
+}
+
 /deep/ .trigger {
 	font-size: 18px;
 	line-height: 64px;

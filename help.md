@@ -13,6 +13,8 @@ import to from 'await-to-js';
 const [err, res] = await to(getMenu());
 if (err) {
 	console.log('错误处理1');
+}else {
+	
 };
 
 const getMenuMockFn = () => {

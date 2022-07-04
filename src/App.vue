@@ -1,11 +1,18 @@
 <template>
-	<div id="app">
-		<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class="loading-container"><a-spin class="spin" tip="正在加载..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
+	<transition name="slide-fade">
+		<div id="app">
+			<!-- 加载中... -->
+			<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class="loading-container">
+				<a-spin class="spin" tip="正在加载..." :spinning="layoutsComputed.menuList.length == 0"></a-spin>
+			</div>
 
-		<router-view v-show="layoutsComputed.menuList.length != 0 || noVerification" />
+			<!-- 页面 -->
+			<!-- <router-view v-slot="{ Component }" > -->
+			<router-view v-show="layoutsComputed.menuList.length != 0 || noVerification"></router-view>
 
-		<!-- <router-view /> -->
-	</div>
+			<!-- <router-view /> -->
+		</div>
+	</transition>
 </template>
 
 <script>
@@ -28,15 +35,15 @@ export default {
 	},
 	created() {
 		let path = window.location.pathname.replace(Config.routeBaseURL, '');
-		let boolanRouteWhiteList = Config.routeWhiteList.find((e) => e.path == path);
-		
+		let boolanRouteWhiteList = Config.routeWhiteList.find(e => e.path == path);
+
 		// 白名单路由直接显示 免验证
 		if (boolanRouteWhiteList) {
 			this.noVerification = true;
 		} else {
 			this.noVerification = false;
 		}
-		
+
 		// console.log(this.$route, window.location.pathname, path, 'app - created');
 	},
 	mounted() {
@@ -57,12 +64,25 @@ export default {
 .loading-container {
 	height: 100vh;
 	position: relative;
-	
+
 	.spin {
 		position: absolute;
 		top: 25%;
 		left: 50%;
-		transform: translate(-50%,-50%);
+		transform: translate(-50%, -50%);
 	}
+}
+
+/* 过渡 */
+.slide-fade-enter-active {
+	transition: all 0.8s ease;
+}
+.slide-fade-leave-active {
+	transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+	transform: translateX(20px);
+	opacity: 0;
 }
 </style>
