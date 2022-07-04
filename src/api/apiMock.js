@@ -12,7 +12,7 @@ const promiseFunction = async (data = {}, delay = 500) => {
 // 获取菜单
 export async function getMenuMock() {
 	let data = {
-		data: [
+		dataTest: [
 			{
 				path: '/base/home',
 				name: 'baseHome',
@@ -150,6 +150,6 @@ export async function getMenuMock() {
 					
 		]
 	}
-	return promiseFunction({data: []}, 500)
+	return promiseFunction({data: []}, 100)
 }
 

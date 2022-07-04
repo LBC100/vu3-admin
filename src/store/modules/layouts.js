@@ -2,9 +2,11 @@
  * 布局
  */
 import to from 'await-to-js';
-import {
-	getMenuMock
-} from '@/api/apiMock.js';
+// import {
+// 	getMenuMock
+// } from '@/api/apiMock.js';
+
+import { getMenuMock } from "@/api/api.js";
 
 
 export default {
@@ -101,6 +103,7 @@ export default {
 			}
 
 			console.log(res, 'actions 获取菜单1');
+			// return
 			context.commit('setMenu', res.data);
 			return res
 			// context.commit('addNum', num);

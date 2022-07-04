@@ -1,6 +1,10 @@
 深拷贝
 	JSON.parse(JSON.stringify(copyObj));
 
+跨域
+	推荐!  开发环境后台直接开启 跨源资源共享（CORS）, 生产环境后台关闭
+	前端反向代理
+
 api
 	import {  } from "@/api/api.js";
 	

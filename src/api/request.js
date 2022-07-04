@@ -1,13 +1,9 @@
 // import store from '@/store'
 import axios from 'axios'
 import qs from 'qs';
+import Config from '@/config/config.js';
 
 
-// 创建一个 axios 实例
-const service = axios.create({
-	// baseURL: Config.apiBaseURL,
-	timeout: 30000, // 请求超时时间,
-})
 
 axios.defaults.withCredentials = true // 携带cookie
 
@@ -36,6 +32,29 @@ axios.interceptors.response.use(
 		return Promise.reject(error)
 	}
 )
+
+// 创建一个 axios 实例
+const service = axios.create({
+	// baseURL: Config.apiBaseURL,
+	timeout: 30000, // 请求超时时间,
+})
+
+export const request = async (opt = {}) => {
+	console.log('请求了', opt);
+	opt.url = `${Config.apiBaseUrl}${opt.url}`
+	
+	return new Promise((resolve, reject) => {
+		service(opt)
+			.then((res) => {
+				// console.log('成功了1');
+				resolve(res.data)
+			})
+			.catch((err) => {
+				reject(err.data)
+			})
+			.finally((e) => {});
+	});
+}
 
 
 export default service

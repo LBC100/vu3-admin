@@ -12,13 +12,13 @@ const NODE_ENV = process.env.NODE_ENV;
 if (NODE_ENV === 'development') {
 	// 开发环境
 
-	API_URL = 'https://www.baidu.com';
+	API_URL = 'http://localhost:5100';
 
 	// 上传文件
 	UPLOAD_URL = '' // 上传
 } else {
 	// API_URL = process.env.API_URL || `${location.origin}/v1/`;
-	API_URL = `${location.origin}/alone/v1/`;
+	API_URL = `${location.origin}/amdin/v1/`;
 	UPLOAD_URL = `${location.origin}/upload/v1`;
 }
 
@@ -47,7 +47,7 @@ let routeWhiteList = [{
 const Config = {
 	VERSION: '1.0.0', // 版本号
 	routeWhiteList: routeWhiteList,
-	
+
 	rootPage: '/base/home',
 	routeBaseURL: '/admin',
 
