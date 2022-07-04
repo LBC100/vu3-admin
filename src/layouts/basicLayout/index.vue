@@ -1,7 +1,7 @@
 <template>
 	<a-layout style="height: 100%;">
 		<a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-			<div class="logo">123</div>
+			<div class="logo">logo</div>
 
 			<a-menu theme="dark" mode="inline" @click="clickMenu" :openKeys="openKeysStore" v-model:selectedKeys="selectedKeys" @openChange="onOpenChange">
 				<template class="" v-for="(item, index) in menuData.menuList" :key="item.path">
