@@ -26,6 +26,7 @@ const routes = [
 	{
 		path: '/',
 		name: '首页',
+		redirect: '/base/home',
 		component: () => import('@/views/blank.vue')
 	},
 	base,

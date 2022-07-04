@@ -93,6 +93,7 @@ export default {
 
 	},
 	actions: {
+		// 获取后台菜单
 		async getMenuAction(context) {
 			const [err, res] = await to(getMenuMock());
 			if (err) {
