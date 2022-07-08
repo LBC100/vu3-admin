@@ -89,7 +89,12 @@ vuex
 	const dayjs = require('dayjs');
 	dayjs().format('YYYY-MM-DD');
 
+import { message } from 'ant-design-vue';
+message.info('提示');
+
 跳转
+	import router from '@/router/index.js';
+
 	import { useRoute, useRouter } from 'vue-router'
 
 	let route = useRoute();

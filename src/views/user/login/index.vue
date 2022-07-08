@@ -1,16 +1,17 @@
 <template>
-	<div class="box">登录页</div>
+  <div style="" class="box">登录页</div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {};
-	},
+  data() {
+    return {};
+  },
 
-	mounted() {},
-	methods: {}
+  mounted() {},
+  methods: {},
 };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+</style>
