@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
-		<div v-if="layoutsComputed.menuList.length == 0 && !noVerification" class="loading-container"><a-spin class="spin" tip="正在加载..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
+		<div style="" v-if="layoutsComputed.menuList.length == 0 && !noVerification" class="loading-container"><a-spin class="spin" tip="正在加载..." :spinning="layoutsComputed.menuList.length == 0"></a-spin></div>
+
 
 		<router-view v-show="layoutsComputed.menuList.length != 0 || noVerification" />
 
@@ -36,7 +37,7 @@ export default {
 		} else {
 			this.noVerification = false;
 		}
-		
+
 		// console.log(this.$route, window.location.pathname, path, 'app - created');
 	},
 	mounted() {
